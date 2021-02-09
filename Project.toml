@@ -1,0 +1,17 @@
+name = "FiniteStateTransducers"
+uuid = "d0430b04-9e26-4b95-8372-754e5cd95c01"
+authors = ["Niccolò Antonello"]
+version = "0.1.0"
+
+[deps]
+DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

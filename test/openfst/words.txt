@@ -1,0 +1,6 @@
+<eps> 0
+ciao 1
+bello 2
+come 3
+la 4
+va 5

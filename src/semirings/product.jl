@@ -16,11 +16,12 @@ struct ProductWeight{N, T <:NTuple{N,Semiring} } <: Semiring
 end
 ProductWeight(x...) = ProductWeight(x)
 reversetype(::Type{S}) where {N,T,S <: ProductWeight{N,T}} =
-ProductWeight{N,Tuple{reversetype.(fieldtypes(T))...}}
+# in future we can use fieldtypes instead of ntuple(i -> fieldtype(T, i), fieldcount(T))
+ProductWeight{N,Tuple{reversetype.(ntuple(i -> fieldtype(T, i), fieldcount(T)))...}}
 ProductWeight{N,T}(x::ProductWeight{N,T}) where {N,T <:NTuple{N,Semiring}} = x
 
-zero(::Type{ProductWeight{N,T}}) where {N,T}  = ProductWeight{N,T}(zero.(fieldtypes(T)))
-one(::Type{ProductWeight{N,T}}) where {N,T}  = ProductWeight{N,T}(one.(fieldtypes(T)))
+zero(::Type{ProductWeight{N,T}}) where {N,T}  = ProductWeight{N,T}(zero.(ntuple(i -> fieldtype(T, i), fieldcount(T))))
+one(::Type{ProductWeight{N,T}}) where {N,T}  = ProductWeight{N,T}(one.(ntuple(i -> fieldtype(T, i), fieldcount(T))))
 
 *(a::ProductWeight{N,T}, b::ProductWeight{N,T}) where {N,T} = ProductWeight{N,T}(a.x .* b.x)
 +(a::ProductWeight{N,T}, b::ProductWeight{N,T}) where {N,T} = ProductWeight{N,T}(a.x .+ b.x)
@@ -35,5 +36,5 @@ for p in [:isleft,
           :isidempotent,
           :iscommulative,
           :iscomplete]
-  @eval $p(::Type{ProductWeight{N,T}}) where {N,T} = all( $p.(fieldtypes(T))  )          
+  @eval $p(::Type{ProductWeight{N,T}}) where {N,T} = all( $p.(ntuple(i -> fieldtype(T, i), fieldcount(T)))  )          
 end

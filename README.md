@@ -1,5 +1,7 @@
 # FiniteStateTransducers.jl
 
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://idiap.github.io/FiniteStateTransducers.jl/stable/)
+[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://idiap.github.io/FiniteStateTransducers.jl/dev/)
 [![codecov](https://codecov.io/gh/idiap/FiniteStateTransducers.jl/branch/main/graph/badge.svg?token=0W3034W0C3)](https://codecov.io/gh/idiap/FiniteStateTransducers.jl)
 
 Play with Weighted Finite State Transducers (WFSTs) using the Julia language.

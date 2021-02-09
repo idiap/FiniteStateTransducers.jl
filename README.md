@@ -1,5 +1,7 @@
 # FiniteStateTransducers.jl
 
+[![codecov](https://codecov.io/gh/idiap/FiniteStateTransducers.jl/branch/main/graph/badge.svg?token=0W3034W0C3)](https://codecov.io/gh/idiap/FiniteStateTransducers.jl)
+
 Play with Weighted Finite State Transducers (WFSTs) using the Julia language.
 
 WFSTs provide a powerful framework that assigns a weight (e.g. probability) to conversions of symbol sequences. 

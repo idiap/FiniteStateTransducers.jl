@@ -256,7 +256,7 @@ W = BoolWeight
 @test FiniteStateTransducers.ispath(W)
 @test FiniteStateTransducers.reversetype(W) == W
 
-a = parse(W,"1")
+a = parse(W,"true")
 @test a.x == true
 
 ########################### 

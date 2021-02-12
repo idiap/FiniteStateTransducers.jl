@@ -1,0 +1,13 @@
+digraph FST {
+rankdir=LR;
+bgcolor="transparent";
+center=1;
+1 [ shape = doublecircle, style = solid, label="", color="#ff635d", style=filled]
+	1 -> 2 [color="#6682df", label="FST:ϵ", fontsize=16, fontcolor="#6682df"];
+	1 -> 3 [color="#6682df", label="ϵ:FST", fontsize=16, fontcolor="#6682df"];
+2 [ shape = circle, style = bold, label="", color="#60ad51", style=filled]
+	2 -> 4 [color="#6682df", label="ϵ:.jl", fontsize=16, fontcolor="#6682df"];
+3 [ shape = circle, style = bold, label="", color="#60ad51", style=filled]
+	3 -> 4 [color="#6682df", label=".jl:ϵ", fontsize=16, fontcolor="#6682df"];
+4 [ shape = doublecircle, style = bold, label="", color="#aa79c1", style=filled]
+}

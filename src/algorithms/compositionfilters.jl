@@ -43,6 +43,52 @@ export EpsMatch
 
 Can be used for WFSTs containing epsilon labels.
 Avoids redundant epsilon paths and giving priority to those that match epsilon labels. 
+
+```julia
+julia> A = txt2fst("0 1 a a 3.0
+       1 2 b <eps> 77.0
+       2 3 c <eps> 33.0
+       3 4 d d 44.0
+       4 90.0
+       ",Dict("a"=>1,"b"=>2,"c"=>3,"d"=>4,"e"=>5))
+WFST #states: 5, #arcs: 4, #isym: 5, #osym: 5
+|1/0.0f0|
+a:a/3.0f0 → (2)
+(2)
+b:ϵ/77.0f0 → (3)
+(3)
+c:ϵ/33.0f0 → (4)
+(4)
+d:d/44.0f0 → (5)
+((5/90.0f0))
+
+julia> B = txt2fst("0 1 a d 15.0
+       1 2 <eps> e 19.0
+       2 3 d a 12.0
+       3 55.0
+       ",Dict("a"=>1,"b"=>2,"c"=>3,"d"=>4,"e"=>5))
+WFST #states: 4, #arcs: 3, #isym: 5, #osym: 5
+|1/0.0f0|
+a:d/15.0f0 → (2)
+(2)
+ϵ:e/19.0f0 → (3)
+(3)
+d:a/12.0f0 → (4)
+((4/55.0f0))
+
+julia> C = ∘(A,B;filter=EpsMatch)
+WFST #states: 5, #arcs: 4, #isym: 5, #osym: 5
+|1/0.0f0|
+a:d/18.0f0 → (2)
+(2)
+b:e/96.0f0 → (3)
+(3)
+c:ϵ/33.0f0 → (4)
+(4)
+d:a/56.0f0 → 5)
+((5/145.0f0))
+
+```
 """
 struct EpsMatch{W,D} <: CompositionFilter
   i3::D
@@ -78,6 +124,53 @@ export EpsSeq
 Can be used for WFSTs containing epsilon labels.
 Avoids redundant epsilon paths. 
 Gives priority to epsilon paths consisting of epsilon-arcs in `A` followed by epsilon-arcs in `B`. 
+
+```julia
+julia> A = txt2fst("0 1 a a 3.0
+       1 2 b <eps> 77.0
+       2 3 c <eps> 33.0
+       3 4 d d 44.0
+       4 90.0
+       ",Dict("a"=>1,"b"=>2,"c"=>3,"d"=>4,"e"=>5))
+WFST #states: 5, #arcs: 4, #isym: 5, #osym: 5
+|1/0.0f0|
+a:a/3.0f0 → (2)
+(2)
+b:ϵ/77.0f0 → (3)
+(3)
+c:ϵ/33.0f0 → (4)
+(4)
+d:d/44.0f0 → (5)
+((5/90.0f0))
+
+julia> B = txt2fst("0 1 a d 15.0
+       1 2 <eps> e 19.0
+       2 3 d a 12.0
+       3 55.0
+       ",Dict("a"=>1,"b"=>2,"c"=>3,"d"=>4,"e"=>5))
+WFST #states: 4, #arcs: 3, #isym: 5, #osym: 5
+|1/0.0f0|
+a:d/15.0f0 → (2)
+(2)
+ϵ:e/19.0f0 → (3)
+(3)
+d:a/12.0f0 → (4)
+((4/55.0f0))
+
+julia> C = ∘(A,B;filter=EpsSeq)
+WFST #states: 6, #arcs: 5, #isym: 5, #osym: 5
+|1/0.0f0|
+a:d/18.0f0 → (2)
+(2)
+b:ϵ/77.0f0 → (3)
+(3)
+c:ϵ/33.0f0 → (4)
+(4)
+ϵ:e/19.0f0 → (5)
+(5)
+d:a/56.0f0 → (6)
+((6/145.0f0))
+```
 """
 struct EpsSeq{W,D} <: CompositionFilter
   i3::D

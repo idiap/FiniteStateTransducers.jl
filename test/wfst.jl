@@ -50,6 +50,12 @@ fst = linearfst([1,1,3,4],[1,2,3,4],rand(4),isym)
 @test isinitial(fst,1)
 @test isfinal(fst,5)
 
+fst = linearfst([1,1,3,4],[:a,:b,:c,:d],rand(4))
+@test length(get_isym(fst)) == 3
+@test eltype(keys(get_isym(fst))) == Int
+@test length(get_osym(fst)) == 4
+@test eltype(keys(get_osym(fst))) == Symbol
+
 ### matrix2fsa
 Ns,Nt=3,10
 sym=Dict("a"=>1,"b"=>2,"c"=>3)
@@ -59,6 +65,11 @@ fst = matrix2wfst(sym,X)
 @test size(fst) == (Nt+1,Ns*Nt)
 @test isinitial(fst,1)
 @test isfinal(fst,Nt+1)
+
+fst = matrix2wfst([:a,:b,:c],X)
+@test eltype(keys(get_isym(fst))) == Symbol
+@test length(get_isym(fst)) == 3
+@test get_isym(fst) == get_osym(fst)
 
 X[2,2] = Inf # this is a tropical zero so no arc should be added
 fst = matrix2wfst(sym,X; W = TropicalWeight{Float32})
@@ -119,48 +130,3 @@ out,w = B(['h', 'e', 'l', 'l'])
 out,w = B(['h', 'e', 'l', 'l', 'l', 'l'])
 @test out == ['n', 'o']
 @test w == W(0.5^2)
-
-# TODO not sure this should stay in this package
-#### fsa2transition
-## transition matrix 3 state HMM with self loop in the middle 
-#Ns,Nt = 3,5 
-#a = [1.0, 0.0, 0.0]
-#A = [
-#     0.0 1.0 0.0; 
-#     0.0 0.5 0.5;
-#     1.0 0.0 0.0;
-#    ]
-#
-## same topo with WFST
-#W = Float64
-#H = WFST(W,String,String)
-#
-## 3 state HMM
-#add_arc!(H,1,2,"a1","a",1.0)
-#add_arc!(H,2,3,"a2","<eps>",0.5)
-#add_arc!(H,2,2,"a2","<eps>",0.5)
-#add_arc!(H,3,4,"a3","<eps>",1.0)
-#add_arc!(H,3,1,"a3","<eps>",1.0)
-#initial!(H,1)
-#final!(H,4)
-##println(H)
-#
-#A2 = fst2transition(H)
-#A = W.(A)
-#@test all( A .== Array(A2) )
-#@test all( sum( A2, dims=2 ) .≈ 1.0 )
-#
-#Nt = 10
-#time2tr = fst2transition(H,Nt)
-##println(time2tr)
-#
-#@test length(time2tr) == Nt-1
-#@test all([ all(keys(tr) .<= length(get_isym(H)) ) for tr in time2tr])
-#
-#H2 = deepcopy(H)
-#add_arc!(H2,1,2,"<eps>","a",1.0)
-#@test_throws ErrorException fst2transition(H2)
-#
-#H2 = deepcopy(H)
-#add_arc!(H2,2,2,"a2","<eps>",0.6)
-#@test_throws ErrorException fst2transition(H2)

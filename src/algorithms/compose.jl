@@ -7,11 +7,50 @@ import Base: ∘
 
 Perform composition of the transucers `A` and `B`.
 
-The keyword `filter` can specify the composition filter to be used.
+```julia
+julia> A = linearfst(["a","b","c"],["α","β","γ"],ones(3))
+WFST #states: 4, #arcs: 3, #isym: 3, #osym: 3
+|1/0.0f0|
+a:α/1.0f0 → (2)
+(2)
+b:β/1.0f0 → (3)
+(3)
+c:γ/1.0f0 → (4)
+((4/0.0f0))
+
+julia> B = matrix2wfst(["α","β","γ"],[:w,:x,:z],ones(3,3))
+WFST #states: 4, #arcs: 9, #isym: 3, #osym: 3
+|1/0.0f0|
+α:w/1.0f0 → (2)
+β:x/1.0f0 → (2)
+γ:z/1.0f0 → (2)
+(2)
+α:w/1.0f0 → (3)
+β:x/1.0f0 → (3)
+γ:z/1.0f0 → (3)
+(3)
+α:w/1.0f0 → (4)
+β:x/1.0f0 → (4)
+γ:z/1.0f0 → (4)
+((4/0.0f0))
+
+julia> A∘B
+WFST #states: 4, #arcs: 3, #isym: 3, #osym: 3
+|1/0.0f0|
+a:w/2.0f0 → (2)
+(2)
+b:x/2.0f0 → (3)
+(3)
+c:z/2.0f0 → (4)
+((4/0.0f0))
+
+```
+
+The keyword `filter` can specify the composition filter to be used, which makes it possible to handle epsilon-transitions. 
+See [Allauzen et al. "Filters for Efficient Composition of Weighted Finite-State Transducers"](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/36838.pdf).
 
 If `connect` is set to `true` after completing the composition the [`connect`](@ref) algorithm is applied. 
 
-See [Allauzen et al. "Filters for Efficient Composition of Weighted Finite-State Transducers"](https://doi.org/10.1007/978-3-642-18098-9_4)
 """
 function ∘(A::WFST{W1,A1,D,I1,O1}, B::WFST{W2,A2,D,I2,O2};
            filter=EpsSeq, connect=true

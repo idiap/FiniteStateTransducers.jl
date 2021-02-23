@@ -8,6 +8,7 @@ export proj
 Projects input labels to output labels (or viceversa).
 The function `get_iolabel` should either be the function `get_ilabel` or `get_olabel`.
 
+```julia
 julia> A = linearfst(["a","b","c"],[1,2,3],ones(3))
 WFST #states: 4, #arcs: 3, #isym: 3, #osym: 3
 |1/1.0|
@@ -37,6 +38,8 @@ WFST #states: 4, #arcs: 3, #isym: 3, #osym: 3
 (3)
 3:3/1.0 → (4)
 ((4/1.0))
+
+```
 """
 function proj(get_iolabel::Function, fst::WFST)
   if !( (get_iolabel == get_ilabel) || (get_iolabel == get_olabel) )

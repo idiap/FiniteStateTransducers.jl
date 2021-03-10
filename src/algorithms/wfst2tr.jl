@@ -96,3 +96,72 @@ function wfst2tr(fst::WFST{W,A,D},Nt; get_label=get_ilabel) where {W,A,D}
   end
   return time2transitions
 end
+
+"""
+  `wfst2tr(fst; get_label=get_ilabel, convert_weight=identity)`
+
+Extract transition matrix and initial probabilities from a WFST representing an HMM model.
+
+```julia
+julia> add_arc!(H,1,2,"a1","a");
+
+julia> add_arc!(H,2,2,"a1","<eps>",-log(0.3));
+
+julia> add_arc!(H,2,3,"a2","<eps>",-log(0.7));
+
+julia> add_arc!(H,3,3,"a2","<eps>",-log(0.3));
+
+julia> add_arc!(H,3,4,"a3","<eps>",-log(0.7));
+
+julia> add_arc!(H,4,4,"a3","<eps>",-log(0.3));
+
+julia> add_arc!(H,4,2,"a1","a",-log(0.7));
+
+julia> initial!(H,1);
+
+julia> final!(H,4)
+WFST #states: 4, #arcs: 12, #isym: 3, #osym: 1
+|1/0.0f0|
+a1:a/0.0f0 → (2)
+a1:a/0.0f0 → (2)
+(2)
+a2:ϵ/0.0f0 → (3)
+a2:ϵ/0.0f0 → (2)
+a1:ϵ/1.2039728f0 → (2)
+a2:ϵ/0.35667494f0 → (3)
+(3)
+a3:ϵ/0.0f0 → (4)
+a3:a/0.0f0 → (2)
+a2:ϵ/1.2039728f0 → (3)
+a3:ϵ/0.35667494f0 → (4)
+((4/0.0f0))
+a3:ϵ/1.2039728f0 → (4)
+a1:a/0.35667494f0 → (2)
+
+julia> a,A = wfst2tr(H; convert_weight = w -> exp(-get(w)))
+(Float32[1.0, 0.0, 0.0], Float32[0.3 0.7 0.0; 0.0 0.3 0.7; 0.7 0.0 0.3])
+```
+"""
+function wfst2tr(fst::WFST{W,A,D}; 
+                 get_label=get_ilabel, convert_weight=identity) where {W,A,D}
+  isym=get_isym(fst)
+  Ns = length(isym)
+  W2 = typeof(convert_weight(one(W)))
+  a = zeros(W2,Ns)
+  H = zeros(W2,Ns,Ns)
+  init = get_initial(fst)
+  state2outtr = Dict(i => (get_ilabel.(s),get_weight.(s)) for (i,s) in enumerate(fst))
+  for (p,s,n,d,e,a) in FiniteStateTransducers.DFS(fst,init)
+    if d
+      intr = get_ilabel(a)
+      outtr, w = state2outtr[n]
+      for i in eachindex(outtr)
+        H[intr,outtr[i]] = convert_weight(w[i])
+      end
+    end
+  end
+  for arc in fst[init]
+    a[get_label(arc)] = convert_weight(get_weight(arc))
+  end
+  return a, H
+end

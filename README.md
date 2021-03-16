@@ -13,3 +13,4 @@ WFSTs are used in many applications such as speech recognition, natural language
 This package takes a lot of inspiration from [OpenFST](http://openfst.org/twiki/bin/view/FST/DeterminizeDoc).
 
 FiniteStateTransducers is still in an early development stage, see the documentation for currently available features and the issues for the missing ones.
+An application of WFSTs can be found in the data preparation of the [TIDIGITS recipe](https://github.com/idiap/TIDIGITSRecipe.jl).

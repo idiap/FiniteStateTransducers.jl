@@ -44,7 +44,7 @@ for T in [Float64, Float32]
   # properties
   W = ProbabilityWeight{T}
   @test FiniteStateTransducers.isidempotent(W) == false
-  @test FiniteStateTransducers.iscommulative(W)
+  @test FiniteStateTransducers.iscommutative(W)
   @test FiniteStateTransducers.isleft(W)
   @test FiniteStateTransducers.isright(W)
   @test FiniteStateTransducers.isweaklydivisible(W)
@@ -102,7 +102,7 @@ for T in [Float64, Float32]
   # properties
   W = LogWeight{T}
   @test FiniteStateTransducers.isidempotent(W) == false
-  @test FiniteStateTransducers.iscommulative(W)
+  @test FiniteStateTransducers.iscommutative(W)
   @test FiniteStateTransducers.isleft(W)
   @test FiniteStateTransducers.isright(W)
   @test FiniteStateTransducers.isweaklydivisible(W)
@@ -161,7 +161,7 @@ for T in [Float64, Float32]
   # properties
   W = NLogWeight{T}
   @test FiniteStateTransducers.isidempotent(W) == false
-  @test FiniteStateTransducers.iscommulative(W)
+  @test FiniteStateTransducers.iscommutative(W)
   @test FiniteStateTransducers.isleft(W)
   @test FiniteStateTransducers.isright(W)
   @test FiniteStateTransducers.isweaklydivisible(W)
@@ -209,7 +209,7 @@ for T in [Float64, Float32]
 
   W = TropicalWeight{T}
   @test FiniteStateTransducers.isidempotent(W)
-  @test FiniteStateTransducers.iscommulative(W)
+  @test FiniteStateTransducers.iscommutative(W)
   @test FiniteStateTransducers.isleft(W)
   @test FiniteStateTransducers.isright(W)
   @test FiniteStateTransducers.isweaklydivisible(W)
@@ -249,7 +249,7 @@ z = zero(BoolWeight)
 
 W = BoolWeight
 @test FiniteStateTransducers.isidempotent(W)
-@test FiniteStateTransducers.iscommulative(W)
+@test FiniteStateTransducers.iscommutative(W)
 @test FiniteStateTransducers.isleft(W)
 @test FiniteStateTransducers.isright(W)
 @test FiniteStateTransducers.isweaklydivisible(W) == false
@@ -297,7 +297,7 @@ c = a*b
 
 W = LeftStringWeight
 @test FiniteStateTransducers.isidempotent(W)
-@test FiniteStateTransducers.iscommulative(W) == false
+@test FiniteStateTransducers.iscommutative(W) == false
 @test FiniteStateTransducers.isleft(W)
 @test FiniteStateTransducers.isright(W) == false
 @test FiniteStateTransducers.isweaklydivisible(W)
@@ -342,7 +342,7 @@ c = a*b
 
 W = RightStringWeight
 @test FiniteStateTransducers.isidempotent(W)
-@test FiniteStateTransducers.iscommulative(W) == false
+@test FiniteStateTransducers.iscommutative(W) == false
 @test FiniteStateTransducers.isleft(W) == false
 @test FiniteStateTransducers.isright(W)
 @test FiniteStateTransducers.isweaklydivisible(W)
@@ -388,7 +388,7 @@ c = a*b
 @test a*(c/a) == c
 
 @test FiniteStateTransducers.isidempotent(W)
-@test FiniteStateTransducers.iscommulative(W) == false
+@test FiniteStateTransducers.iscommutative(W) == false
 @test FiniteStateTransducers.isleft(W)
 @test FiniteStateTransducers.isright(W) == false
 @test FiniteStateTransducers.isweaklydivisible(W)

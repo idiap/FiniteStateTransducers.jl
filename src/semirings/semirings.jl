@@ -59,13 +59,13 @@ Check if the semiring type `W` satisfies:
 isidempotent(::Type{W}) where {W} = false       # ∀ a: a+a = a
 
 """
-`iscommulative(::Type{W})`
+`iscommutative(::Type{W})`
 
 Check if the semiring type `W` satisfies:
 
 ``\\forall a,b \\in \\mathbb{W}: a \\otimes b = b \\otimes a``
 """
-iscommulative(::Type{W}) where {W} = false      # ∀ a,b: a*b = b*a
+iscommutative(::Type{W}) where {W} = false      # ∀ a,b: a*b = b*a
 iscomplete(::Type{W}) where {W} = false
 
 Base.show(io::IO, T::Semiring) = Base.show(io, T.x)

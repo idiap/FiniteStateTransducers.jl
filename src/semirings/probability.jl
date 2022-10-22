@@ -21,7 +21,7 @@ one(::Type{ProbabilityWeight{T}}) where T = ProbabilityWeight{T}(one(T))
 /(a::ProbabilityWeight{T}, b::ProbabilityWeight{T}) where {T <: AbstractFloat} = ProbabilityWeight{T}(a.x / b.x)
 
 # properties
-iscommulative(::Type{W}) where {W<:ProbabilityWeight} = true
+iscommutative(::Type{W}) where {W<:ProbabilityWeight} = true
 isleft(::Type{W}) where {W<:ProbabilityWeight} = true
 isright(::Type{W}) where {W<:ProbabilityWeight} = true
 isweaklydivisible(::Type{W}) where {W <: ProbabilityWeight}= true

@@ -26,7 +26,7 @@ parse(::Type{S},str) where {T, S <: TropicalWeight{T}} = S(parse(T,str))
 
 #properties
 isidempotent(::Type{W}) where {W <: TropicalWeight} = true
-iscommulative(::Type{W}) where {W <: TropicalWeight} = true
+iscommutative(::Type{W}) where {W <: TropicalWeight} = true
 isleft(::Type{W}) where {W <: TropicalWeight}= true
 isright(::Type{W}) where {W <: TropicalWeight}= true
 isweaklydivisible(::Type{W}) where {W <: TropicalWeight}= true

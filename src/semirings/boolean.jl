@@ -22,7 +22,7 @@ one(::Type{BoolWeight}) = BoolWeight(true)
 
 #properties
 isidempotent(::Type{W}) where {W <: BoolWeight} = true
-iscommulative(::Type{W}) where {W <: BoolWeight} = true
+iscommutative(::Type{W}) where {W <: BoolWeight} = true
 isleft(::Type{W}) where {W <: BoolWeight}= true
 isright(::Type{W}) where {W <: BoolWeight}= true
 ispath(::Type{W}) where {W <: BoolWeight}= true

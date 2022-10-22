@@ -33,7 +33,7 @@ Some algorithms are only available for WFST's whose weights belong to semirings 
 A list of these properties follows:
 
 ```@docs
-FiniteStateTransducers.iscommulative
+FiniteStateTransducers.iscommutative
 FiniteStateTransducers.isleft
 FiniteStateTransducers.isright
 FiniteStateTransducers.isweaklydivisible

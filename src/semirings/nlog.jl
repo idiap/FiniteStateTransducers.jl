@@ -28,7 +28,7 @@ reverse(a::NLogWeight) = a
 parse(::Type{S},str) where {T, S <: NLogWeight{T}} = S(parse(T,str))
 
 #properties
-iscommulative(::Type{W}) where {W <: NLogWeight} = true
+iscommutative(::Type{W}) where {W <: NLogWeight} = true
 isleft(::Type{W}) where {W <: NLogWeight} = true
 isright(::Type{W}) where {W <: NLogWeight}= true
 isweaklydivisible(::Type{W}) where {W <: NLogWeight}= true

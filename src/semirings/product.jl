@@ -34,7 +34,7 @@ for p in [:isleft,
           :isweaklydivisible,
           :ispath,
           :isidempotent,
-          :iscommulative,
+          :iscommutative,
           :iscomplete]
   @eval $p(::Type{ProductWeight{N,T}}) where {N,T} = all( $p.(ntuple(i -> fieldtype(T, i), fieldcount(T)))  )          
 end
